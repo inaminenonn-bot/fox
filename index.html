@@ -194,7 +194,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(15, 23, 42, 0.9);
+            background-color: rgba(15, 23, 42, 0.92);
             z-index: 999;
             justify-content: center;
             align-items: center;
@@ -204,8 +204,8 @@
             display: flex;
         }
         .lightbox img {
-            max-width: 90%;
-            max-height: 90%;
+            max-width: 85%;
+            max-height: 88%;
             border-radius: 4px;
             box-shadow: 0 0 40px rgba(0,0,0,0.4);
         }
@@ -219,9 +219,40 @@
             line-height: 1;
             font-weight: 300;
             transition: opacity 0.2s;
+            z-index: 1000;
         }
         .lightbox-close:hover {
             opacity: 0.7;
+        }
+        /* 翻页箭头 */
+        .lightbox-prev, .lightbox-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 56px;
+            cursor: pointer;
+            padding: 20px 24px;
+            user-select: none;
+            transition: opacity 0.2s;
+            font-weight: 300;
+            z-index: 1000;
+            line-height: 1;
+        }
+        .lightbox-prev { left: 20px; }
+        .lightbox-next { right: 20px; }
+        .lightbox-prev:hover, .lightbox-next:hover {
+            opacity: 0.6;
+        }
+        /* 图片计数 */
+        .lightbox-counter {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+            letter-spacing: 1px;
         }
 
         /* 页脚 */
@@ -262,6 +293,12 @@
                 font-size: 13px;
                 padding: 10px 12px;
             }
+            .lightbox-prev, .lightbox-next {
+                font-size: 40px;
+                padding: 16px;
+            }
+            .lightbox-prev { left: 8px; }
+            .lightbox-next { right: 8px; }
         }
     </style>
 </head>
@@ -294,19 +331,19 @@
         <!-- 01 技能证书 -->
         <div class="tab-pane active" id="tab1">
             <div class="cert-grid">
-                <div class="cert-card" onclick="openLightbox('01技能证书/01数学奥林匹克二级教练员.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="01技能证书/01数学奥林匹克二级教练员.jpg" alt="数学奥林匹克二级教练员">
                     <div class="cert-title">数学奥林匹克二级教练员</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('01技能证书/02普通话证书.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="01技能证书/02普通话证书.jpg" alt="普通话证书">
                     <div class="cert-title">普通话水平等级证书</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('01技能证书/03英语四级证书.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="01技能证书/03英语四级证书.jpg" alt="英语四级证书">
                     <div class="cert-title">大学英语四级证书</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('01技能证书/04英语六级证书.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="01技能证书/04英语六级证书.jpg" alt="英语六级证书">
                     <div class="cert-title">大学英语六级证书</div>
                 </div>
@@ -316,35 +353,35 @@
         <!-- 02 个人荣誉 -->
         <div class="tab-pane" id="tab2">
             <div class="cert-grid">
-                <div class="cert-card" onclick="openLightbox('02个人荣誉/01博雅丹桂奖学金.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="02个人荣誉/01博雅丹桂奖学金.jpg" alt="博雅丹桂奖学金">
                     <div class="cert-title">博雅丹桂奖学金</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('02个人荣誉/02树人单项奖学金.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="02个人荣誉/02树人单项奖学金.jpg" alt="树人单项奖学金">
                     <div class="cert-title">树人单项奖学金</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('02个人荣誉/03先进个人.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="02个人荣誉/03先进个人.jpg" alt="先进个人">
                     <div class="cert-title">先进个人</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('02个人荣誉/04 2023-2024三好学生.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="02个人荣誉/04 2023-2024三好学生.jpg" alt="2023-2024三好学生">
                     <div class="cert-title">2023-2024 三好学生</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('02个人荣誉/05 2024-2025三好学生.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="02个人荣誉/05 2024-2025三好学生.jpg" alt="2024-2025三好学生">
                     <div class="cert-title">2024-2025 三好学生</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('02个人荣誉/06优秀共青团员.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="02个人荣誉/06优秀共青团员.jpg" alt="优秀共青团员">
                     <div class="cert-title">优秀共青团员</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('02个人荣誉/07优秀志愿者.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="02个人荣誉/07优秀志愿者.jpg" alt="优秀志愿者">
                     <div class="cert-title">优秀志愿者</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('02个人荣誉/08志愿服务证明.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="02个人荣誉/08志愿服务证明.jpg" alt="志愿服务证明">
                     <div class="cert-title">志愿服务证明</div>
                 </div>
@@ -354,15 +391,15 @@
         <!-- 03 公派留学 -->
         <div class="tab-pane" id="tab3">
             <div class="cert-grid">
-                <div class="cert-card" onclick="openLightbox('03公派留学/01资格证书.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="03公派留学/01资格证书.jpg" alt="公派留学资格证书">
                     <div class="cert-title">国家公派留学资格证书</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('03公派留学/02语言证明邀请函.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="03公派留学/02语言证明邀请函.jpg" alt="语言证明邀请函">
                     <div class="cert-title">语言证明与邀请函</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('03公派留学/03成绩单.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="03公派留学/03成绩单.jpg" alt="留学成绩单">
                     <div class="cert-title">境外学业成绩单</div>
                 </div>
@@ -379,33 +416,37 @@
             <!-- 子分类1：暑期支教 -->
             <div class="sub-pane active" id="sub1">
                 <div class="cert-grid">
-                    <div class="cert-card" onclick="openLightbox('04在校经历/01暑期支教/01湖北日报1.jpg')">
+                    <div class="cert-card" onclick="openLightbox(this)">
                         <img src="04在校经历/01暑期支教/01湖北日报1.jpg" alt="湖北日报报道">
                         <div class="cert-title">湖北日报报道（一）</div>
                     </div>
-                    <div class="cert-card" onclick="openLightbox('04在校经历/01暑期支教/02湖北日报2.jpg')">
+                    <div class="cert-card" onclick="openLightbox(this)">
                         <img src="04在校经历/01暑期支教/02湖北日报2.jpg" alt="湖北日报报道">
                         <div class="cert-title">湖北日报报道（二）</div>
                     </div>
-                    <div class="cert-card" onclick="openLightbox('04在校经历/01暑期支教/03青春远安.jpg')">
+                    <div class="cert-card" onclick="openLightbox(this)">
                         <img src="04在校经历/01暑期支教/03青春远安.jpg" alt="青春远安报道">
                         <div class="cert-title">青春远安报道</div>
                     </div>
-                    <div class="cert-card" onclick="openLightbox('04在校经历/01暑期支教/04远安发布.jpg')">
+                    <div class="cert-card" onclick="openLightbox(this)">
                         <img src="04在校经历/01暑期支教/04远安发布.jpg" alt="远安发布报道">
                         <div class="cert-title">远安发布报道</div>
                     </div>
-                    <div class="cert-card" onclick="openLightbox('04在校经历/01暑期支教/05当代师范生杂志.jpg')">
+                    <div class="cert-card" onclick="openLightbox(this)">
                         <img src="04在校经历/01暑期支教/05当代师范生杂志.jpg" alt="当代师范生杂志">
                         <div class="cert-title">当代师范生杂志收录</div>
                     </div>
-                    <div class="cert-card" onclick="openLightbox('04在校经历/01暑期支教/06爱在华师公众号.jpg')">
+                    <div class="cert-card" onclick="openLightbox(this)">
                         <img src="04在校经历/01暑期支教/06爱在华师公众号.jpg" alt="爱在华师公众号">
                         <div class="cert-title">爱在华师公众号报道</div>
                     </div>
-                    <div class="cert-card" onclick="openLightbox('04在校经历/01暑期支教/07实践证明.jpg')">
+                    <div class="cert-card" onclick="openLightbox(this)">
                         <img src="04在校经历/01暑期支教/07实践证明.jpg" alt="暑期实践证明">
                         <div class="cert-title">暑期社会实践证明</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <img src="04在校经历/01暑期支教/08七彩假期项目公示.jpg" alt="七彩假期项目公示">
+                        <div class="cert-title">七彩假期项目公示</div>
                     </div>
                 </div>
             </div>
@@ -413,11 +454,11 @@
             <!-- 子分类2：学生工作 -->
             <div class="sub-pane" id="sub2">
                 <div class="cert-grid">
-                    <div class="cert-card" onclick="openLightbox('04在校经历/02学生工作/01 2023-2024学生主席.jpg')">
+                    <div class="cert-card" onclick="openLightbox(this)">
                         <img src="04在校经历/02学生工作/01 2023-2024学生主席.jpg" alt="2023-2024学生会主席聘书">
                         <div class="cert-title">2023-2024 学生会主席聘书</div>
                     </div>
-                    <div class="cert-card" onclick="openLightbox('04在校经历/02学生工作/02 2024-2025学生主席.jpg')">
+                    <div class="cert-card" onclick="openLightbox(this)">
                         <img src="04在校经历/02学生工作/02 2024-2025学生主席.jpg" alt="2024-2025学生会主席聘书">
                         <div class="cert-title">2024-2025 学生会主席聘书</div>
                     </div>
@@ -428,23 +469,23 @@
         <!-- 05 师范生技能 -->
         <div class="tab-pane" id="tab5">
             <div class="cert-grid">
-                <div class="cert-card" onclick="openLightbox('05师范生技能/01优质课比赛一等奖.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="05师范生技能/01优质课比赛一等奖.jpg" alt="优质课比赛一等奖">
                     <div class="cert-title">优质课比赛 一等奖</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('05师范生技能/02微课比赛二等奖.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="05师范生技能/02微课比赛二等奖.jpg" alt="微课比赛二等奖">
                     <div class="cert-title">微课比赛 二等奖</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('05师范生技能/03普通话朗诵比赛二等奖.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="05师范生技能/03普通话朗诵比赛二等奖.jpg" alt="普通话朗诵比赛二等奖">
                     <div class="cert-title">普通话朗诵比赛 二等奖</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('05师范生技能/04班主任基本功比赛三等奖.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="05师范生技能/04班主任基本功比赛三等奖.jpg" alt="班主任基本功比赛三等奖">
                     <div class="cert-title">班主任基本功比赛 三等奖</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('05师范生技能/05试卷设计比赛三等奖.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="05师范生技能/05试卷设计比赛三等奖.jpg" alt="试卷设计比赛三等奖">
                     <div class="cert-title">试卷设计比赛 三等奖</div>
                 </div>
@@ -454,51 +495,51 @@
         <!-- 06 其他奖项 -->
         <div class="tab-pane" id="tab6">
             <div class="cert-grid">
-                <div class="cert-card" onclick="openLightbox('06其他奖项/01简历比赛二等奖.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="06其他奖项/01简历比赛二等奖.jpg" alt="简历比赛二等奖">
                     <div class="cert-title">简历比赛 二等奖</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('06其他奖项/02职业规划大赛三等奖.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="06其他奖项/02职业规划大赛三等奖.jpg" alt="职业规划大赛三等奖">
                     <div class="cert-title">职业规划大赛 三等奖</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('06其他奖项/03挑战杯优秀奖.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="06其他奖项/03挑战杯优秀奖.jpg" alt="挑战杯优秀奖">
                     <div class="cert-title">挑战杯 优秀奖</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('06其他奖项/04挑战杯三等奖.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="06其他奖项/04挑战杯三等奖.jpg" alt="挑战杯三等奖">
                     <div class="cert-title">挑战杯 三等奖</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('06其他奖项/05军训优秀学员.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="06其他奖项/05军训优秀学员.jpg" alt="军训优秀学员">
                     <div class="cert-title">军训优秀学员</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('06其他奖项/06军训之星风采奖.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="06其他奖项/06军训之星风采奖.jpg" alt="军训之星风采奖">
                     <div class="cert-title">军训之星风采奖</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('06其他奖项/07第一届情景剧大赛三等奖.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="06其他奖项/07第一届情景剧大赛三等奖.jpg" alt="第一届情景剧大赛三等奖">
                     <div class="cert-title">第一届情景剧大赛 三等奖</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('06其他奖项/08第二届情景剧大赛三等奖.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="06其他奖项/08第二届情景剧大赛三等奖.jpg" alt="第二届情景剧大赛三等奖">
                     <div class="cert-title">第二届情景剧大赛 三等奖</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('06其他奖项/09体育活动积极分子.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="06其他奖项/09体育活动积极分子.jpg" alt="体育活动积极分子">
                     <div class="cert-title">体育活动积极分子</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('06其他奖项/10CUUA华中预选赛最佳新人.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="06其他奖项/10CUUA华中预选赛最佳新人.jpg" alt="CUUA华中预选赛最佳新人">
                     <div class="cert-title">CUUA华中预选赛 最佳新人</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('06其他奖项/11运动会男子400m第二名.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="06其他奖项/11运动会男子400m第二名.jpg" alt="运动会男子400m第二名">
                     <div class="cert-title">运动会男子400米 第二名</div>
                 </div>
-                <div class="cert-card" onclick="openLightbox('06其他奖项/12运动会男子跳远第六名.jpg')">
+                <div class="cert-card" onclick="openLightbox(this)">
                     <img src="06其他奖项/12运动会男子跳远第六名.jpg" alt="运动会男子跳远第六名">
                     <div class="cert-title">运动会男子跳远 第六名</div>
                 </div>
@@ -514,10 +555,17 @@
     <!-- 灯箱放大组件 -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
         <span class="lightbox-close">&times;</span>
+        <span class="lightbox-prev" onclick="event.stopPropagation(); prevImage()">&#10094;</span>
+        <span class="lightbox-next" onclick="event.stopPropagation(); nextImage()">&#10095;</span>
         <img id="lightboxImg" src="" alt="证书放大查看">
+        <div class="lightbox-counter" id="lightboxCounter">1 / 1</div>
     </div>
 
     <script>
+        // 全局变量：当前图片列表与索引
+        let currentImageList = [];
+        let currentImageIndex = 0;
+
         // 一级标签切换
         const mainTabs = document.querySelectorAll('#mainTabs .tab-item');
         const tabPanes = document.querySelectorAll('.tab-pane');
@@ -544,19 +592,57 @@
             });
         });
 
-        // 灯箱功能
-        function openLightbox(src) {
-            document.getElementById('lightboxImg').src = src;
+        // 打开灯箱
+        function openLightbox(card) {
+            // 获取当前激活的面板（优先子面板）
+            const activeTab = document.querySelector('.tab-pane.active');
+            const activeSubPane = activeTab.querySelector('.sub-pane.active');
+            const container = activeSubPane || activeTab;
+            
+            // 收集当前分类下所有图片
+            const cards = container.querySelectorAll('.cert-card');
+            currentImageList = Array.from(cards).map(c => c.querySelector('img').src);
+            currentImageIndex = Array.from(cards).indexOf(card);
+
+            // 更新图片与计数
+            updateLightboxImage();
+            
+            // 显示灯箱
             document.getElementById('lightbox').classList.add('show');
             document.body.style.overflow = 'hidden';
         }
+
+        // 更新灯箱图片与计数
+        function updateLightboxImage() {
+            document.getElementById('lightboxImg').src = currentImageList[currentImageIndex];
+            document.getElementById('lightboxCounter').textContent = 
+                `${currentImageIndex + 1} / ${currentImageList.length}`;
+        }
+
+        // 上一张
+        function prevImage() {
+            currentImageIndex = (currentImageIndex - 1 + currentImageList.length) % currentImageList.length;
+            updateLightboxImage();
+        }
+
+        // 下一张
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % currentImageList.length;
+            updateLightboxImage();
+        }
+
+        // 关闭灯箱
         function closeLightbox() {
             document.getElementById('lightbox').classList.remove('show');
             document.body.style.overflow = '';
         }
-        // ESC键关闭灯箱
+
+        // 键盘快捷键
         document.addEventListener('keydown', (e) => {
+            if (!document.getElementById('lightbox').classList.contains('show')) return;
             if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') prevImage();
+            if (e.key === 'ArrowRight') nextImage();
         });
     </script>
 </body>
