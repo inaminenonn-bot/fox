@@ -5,95 +5,175 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>徐海麟 - 个人荣誉资质展示</title>
     <style>
+        /* 默认主题色（技能证书：沉稳蓝） */
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #3b82f6;
+            --bg-color: #f4f7fb;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --line: #e2e8f0;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+            transition: color 0.4s ease, background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
         }
 
         body {
-            background-color: #f5f7fa;
-            color: #2c3e50;
+            color: var(--text-main);
             line-height: 1.6;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            background-color: var(--bg-color);
+            overflow-x: hidden;
         }
 
-        /* 顶部个人信息头部 */
-        .header {
-            background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%);
-            color: white;
-            padding: 50px 20px;
+        /* ===== 动态数学背景 ===== */
+        .math-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+            transition: background-color 0.6s ease;
         }
-        .header-content {
+        .math-bg::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(color-mix(in srgb, var(--primary) 10%, transparent) 1px, transparent 1px);
+            background-size: 30px 30px;
+            transition: background-image 0.6s ease;
+        }
+        .math-symbol {
+            position: absolute;
+            font-family: Georgia, "Times New Roman", serif;
+            font-weight: bold;
+            color: var(--primary);
+            opacity: 0.04;
+            animation: float 25s infinite linear alternate;
+            user-select: none;
+            transition: color 0.6s ease;
+        }
+        .sym-1 { top: 10%; left: 8%; font-size: 160px; animation-duration: 30s; }
+        .sym-2 { top: 60%; right: 5%; font-size: 200px; animation-duration: 35s; animation-direction: alternate-reverse; }
+        .sym-3 { bottom: 10%; left: 20%; font-size: 120px; animation-duration: 22s; }
+        .sym-4 { top: 30%; right: 25%; font-size: 140px; animation-duration: 28s; animation-direction: alternate-reverse; }
+        .sym-5 { bottom: 35%; right: 15%; font-size: 150px; animation-duration: 32s; }
+        .sym-6 { top: 15%; left: 45%; font-size: 110px; animation-duration: 26s; }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-40px) rotate(15deg); }
+        }
+
+        .main-wrapper {
             max-width: 1200px;
             margin: 0 auto;
-        }
-        .header h1 {
-            font-size: 36px;
-            font-weight: 600;
-            letter-spacing: 2px;
-            margin-bottom: 12px;
-        }
-        .job-intention {
-            font-size: 18px;
-            font-weight: 500;
-            margin-bottom: 8px;
-            opacity: 0.95;
-        }
-        .profile {
-            font-size: 15px;
-            opacity: 0.85;
-            letter-spacing: 1px;
-        }
-        .divider {
-            width: 60px;
-            height: 3px;
-            background-color: #4a90e2;
-            margin: 16px 0;
-            border-radius: 2px;
+            padding: 40px 20px 60px;
         }
 
-        /* 一级标签导航 */
+        /* ===== 顶部 Header ===== */
+        .header {
+            background: linear-gradient(135deg, #16304f 0%, #1e3a5f 46%, #2c5282 100%);
+            color: white;
+            padding: 40px 36px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 18px 40px -20px rgba(15, 23, 42, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::after {
+            content: "";
+            position: absolute;
+            top: -100px; right: -60px;
+            width: 350px; height: 350px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(96,165,250,.25), transparent 60%);
+            pointer-events: none;
+        }
+
+        .logo-wrap {
+            flex: 0 0 auto;
+            z-index: 1;
+        }
+        .school-logo {
+            height: 80px;
+            width: auto;
+            mix-blend-mode: screen;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
+            transition: transform 0.3s ease;
+        }
+        .school-logo:hover {
+            transform: scale(1.04);
+        }
+
+        .header-info {
+            flex: 1;
+            z-index: 1;
+        }
+        .header h1 {
+            font-size: 34px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            margin-bottom: 6px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .job-intention {
+            font-size: 17px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: #dbeafe;
+        }
+        .profile {
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* ===== 分类导航 (带主题色联动) ===== */
         .tabs-container {
-            max-width: 1200px;
-            margin: 30px auto 0;
-            padding: 0 20px;
-            background: white;
-            border-radius: 8px 8px 0 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            background: transparent;
+            margin-bottom: 24px;
         }
         .tabs {
             display: flex;
             flex-wrap: wrap;
-            gap: 0;
-            border-bottom: 1px solid #e2e8f0;
+            gap: 12px;
         }
         .tab-item {
-            padding: 16px 24px;
+            padding: 10px 24px;
             cursor: pointer;
             font-size: 15px;
-            transition: all 0.25s ease;
-            color: #64748b;
-            position: relative;
             font-weight: 500;
+            color: var(--text-muted);
+            background: #ffffff;
+            border-radius: 30px;
+            border: 1px solid var(--line);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            transition: all 0.3s ease;
         }
         .tab-item:hover {
-            color: #2c5282;
+            color: var(--primary);
+            border-color: var(--primary-light);
             background-color: #f8fafc;
+            transform: translateY(-1px);
         }
         .tab-item.active {
-            color: #2c5282;
+            color: #ffffff;
             font-weight: 600;
-        }
-        .tab-item.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 24px;
-            right: 24px;
-            height: 2px;
-            background-color: #2c5282;
-            border-radius: 2px;
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 6px 16px -6px var(--primary);
         }
 
         /* 二级子标签 */
@@ -101,128 +181,173 @@
             display: flex;
             gap: 12px;
             margin-bottom: 24px;
-            padding: 16px 0 8px;
+            padding: 16px 20px 0;
         }
         .sub-tab-item {
-            padding: 6px 18px;
+            padding: 6px 16px;
             cursor: pointer;
             font-size: 14px;
-            border-radius: 4px;
-            background-color: #f1f5f9;
-            color: #475569;
+            border-radius: 8px;
+            background-color: transparent;
+            color: var(--text-muted);
             transition: all 0.25s ease;
             border: 1px solid transparent;
         }
         .sub-tab-item:hover {
-            background-color: #e2e8f0;
+            background-color: #f1f5f9;
+            color: var(--primary);
         }
         .sub-tab-item.active {
-            background-color: #eff6ff;
-            color: #2c5282;
-            border-color: #bfdbfe;
+            background-color: color-mix(in srgb, var(--primary) 10%, transparent);
+            color: var(--primary);
+            border-color: color-mix(in srgb, var(--primary) 30%, transparent);
+            font-weight: 600;
         }
 
-        /* 内容区域 */
+        /* ===== 内容区域 ===== */
         .tab-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px 60px;
-            background: white;
-            border-radius: 0 0 8px 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.08);
+            min-height: 400px;
+            position: relative;
+            overflow: hidden;
         }
+        /* 顶部的动态主题色装饰条 */
+        .tab-content::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: var(--primary);
+            transition: background-color 0.4s ease;
+        }
+
         .tab-pane {
             display: none;
-            animation: fadeIn 0.3s ease;
-            padding: 20px 0;
+            animation: fadeIn 0.4s ease;
         }
         .tab-pane.active {
             display: block;
         }
         .sub-pane {
             display: none;
-            animation: fadeIn 0.3s ease;
+            animation: fadeIn 0.4s ease;
         }
         .sub-pane.active {
             display: block;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         /* 图片网格 */
         .cert-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 24px;
         }
         .cert-card {
             background: #ffffff;
-            border-radius: 6px;
+            border-radius: 12px;
             overflow: hidden;
-            border: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
+            border: 1px solid var(--line);
+            transition: all 0.35s cubic-bezier(0.2, 0.7, 0.3, 1);
             cursor: pointer;
+            display: flex;
+            flex-direction: column;
         }
+        /* 卡片悬停时联动主题色 */
         .cert-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(30, 58, 95, 0.1);
-            border-color: #cbd5e1;
+            transform: translateY(-6px);
+            box-shadow: 0 16px 30px -12px color-mix(in srgb, var(--primary) 30%, transparent);
+            border-color: var(--primary-light);
         }
-        .cert-card img {
+        .img-wrap {
             width: 100%;
-            height: 190px;
-            object-fit: contain;
+            height: 180px;
             background-color: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
             border-bottom: 1px solid #f1f5f9;
+            position: relative;
+            overflow: hidden;
+        }
+        .img-wrap img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.4s ease;
+        }
+        .cert-card:hover .img-wrap img {
+            transform: scale(1.05);
         }
         .cert-title {
-            padding: 14px 16px;
-            font-size: 14px;
+            padding: 14px 12px;
+            font-size: 14.5px;
             text-align: center;
-            color: #334155;
+            color: var(--text-main);
             font-weight: 500;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* 底部加上对应主题色的渐变暗纹 */
+            background: linear-gradient(to top, color-mix(in srgb, var(--primary) 4%, transparent), transparent);
         }
 
-        /* 灯箱放大效果 */
+        /* ===== 灯箱放大效果 ===== */
         .lightbox {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(15, 23, 42, 0.92);
+            inset: 0;
+            background-color: rgba(10, 18, 32, 0.94);
             z-index: 999;
             justify-content: center;
             align-items: center;
             padding: 40px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
         .lightbox.show {
             display: flex;
+            animation: fadeIn 0.3s ease;
         }
         .lightbox img {
-            max-width: 85%;
-            max-height: 88%;
-            border-radius: 4px;
-            box-shadow: 0 0 40px rgba(0,0,0,0.4);
+            max-width: 90%;
+            max-height: 85%;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            background: #fff;
+            padding: 10px;
         }
         .lightbox-close {
             position: absolute;
-            top: 20px;
-            right: 30px;
+            top: 30px;
+            right: 40px;
             color: white;
-            font-size: 36px;
+            font-size: 40px;
             cursor: pointer;
             line-height: 1;
             font-weight: 300;
-            transition: opacity 0.2s;
+            transition: transform 0.2s, opacity 0.2s;
             z-index: 1000;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
         }
         .lightbox-close:hover {
-            opacity: 0.7;
+            opacity: 0.8;
+            transform: rotate(90deg);
         }
         /* 翻页箭头 */
         .lightbox-prev, .lightbox-next {
@@ -230,331 +355,349 @@
             top: 50%;
             transform: translateY(-50%);
             color: white;
-            font-size: 56px;
+            font-size: 36px;
             cursor: pointer;
-            padding: 20px 24px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
             user-select: none;
-            transition: opacity 0.2s;
-            font-weight: 300;
+            transition: all 0.2s;
             z-index: 1000;
-            line-height: 1;
+            backdrop-filter: blur(4px);
         }
-        .lightbox-prev { left: 20px; }
-        .lightbox-next { right: 20px; }
+        .lightbox-prev { left: 30px; }
+        .lightbox-next { right: 30px; }
         .lightbox-prev:hover, .lightbox-next:hover {
-            opacity: 0.6;
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-50%) scale(1.05);
         }
         /* 图片计数 */
         .lightbox-counter {
             position: absolute;
-            bottom: 24px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            color: rgba(255,255,255,0.8);
-            font-size: 14px;
-            letter-spacing: 1px;
+            color: rgba(255,255,255,0.7);
+            font-size: 15px;
+            letter-spacing: 2px;
+            background: rgba(0,0,0,0.4);
+            padding: 6px 16px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
         }
 
         /* 页脚 */
         .footer {
             text-align: center;
-            padding: 30px 20px;
+            padding: 40px 20px 20px;
             color: #94a3b8;
             font-size: 13px;
         }
 
-        /* 移动端适配 */
+        /* ===== 移动端适配 ===== */
         @media (max-width: 768px) {
+            .main-wrapper { padding: 20px 16px 40px; }
             .header {
-                padding: 36px 20px;
+                padding: 30px 20px;
+                flex-direction: column;
+                text-align: center;
+                gap: 16px;
             }
-            .header h1 {
-                font-size: 28px;
-            }
-            .job-intention {
-                font-size: 16px;
-            }
-            .tab-item {
-                padding: 12px 16px;
-                font-size: 14px;
-            }
-            .tab-item.active::after {
-                left: 16px;
-                right: 16px;
-            }
+            .school-logo { height: 70px; }
+            .header h1 { font-size: 28px; }
+            .job-intention { font-size: 15px; }
+            
+            .tab-item { padding: 8px 16px; font-size: 14px; }
+            .tab-content { padding: 20px 16px; border-radius: 16px; }
+            .sub-tabs { padding: 10px 0 0; overflow-x: auto; white-space: nowrap; }
+            
             .cert-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-                gap: 14px;
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 16px;
             }
-            .cert-card img {
-                height: 130px;
-            }
-            .cert-title {
-                font-size: 13px;
-                padding: 10px 12px;
-            }
-            .lightbox-prev, .lightbox-next {
-                font-size: 40px;
-                padding: 16px;
-            }
-            .lightbox-prev { left: 8px; }
-            .lightbox-next { right: 8px; }
+            .img-wrap { height: 120px; padding: 6px; }
+            .cert-title { font-size: 13px; padding: 10px 8px; }
+            
+            .lightbox { padding: 20px; }
+            .lightbox-close { top: 15px; right: 20px; font-size: 30px; width: 34px; height: 34px; }
+            .lightbox-prev { left: 10px; width: 44px; height: 44px; font-size: 24px; }
+            .lightbox-next { right: 10px; width: 44px; height: 44px; font-size: 24px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 顶部个人信息栏 -->
-    <div class="header">
-        <div class="header-content">
-            <h1>徐海麟</h1>
-            <div class="divider"></div>
-            <p class="job-intention">求职意向：中学数学教师</p>
-            <p class="profile">2027届 · 部属公费师范生 · 数学教育方向</p>
-        </div>
+    <!-- 背景数学元素 -->
+    <div class="math-bg" aria-hidden="true">
+        <span class="math-symbol sym-1">∑</span>
+        <span class="math-symbol sym-2">∫</span>
+        <span class="math-symbol sym-3">π</span>
+        <span class="math-symbol sym-4">√</span>
+        <span class="math-symbol sym-5">f(x)</span>
+        <span class="math-symbol sym-6">∞</span>
     </div>
 
-    <!-- 分类导航 -->
-    <div class="tabs-container">
-        <div class="tabs" id="mainTabs">
-            <div class="tab-item active" data-tab="tab1">技能证书</div>
-            <div class="tab-item" data-tab="tab2">个人荣誉</div>
-            <div class="tab-item" data-tab="tab3">公派留学</div>
-            <div class="tab-item" data-tab="tab4">在校经历</div>
-            <div class="tab-item" data-tab="tab5">师范生技能</div>
-            <div class="tab-item" data-tab="tab6">其他奖项</div>
-        </div>
-    </div>
+    <div class="main-wrapper">
+        <!-- 顶部 Header -->
+        <header class="header">
+            <div class="logo-wrap">
+                <img src="logo.png" alt="华中师范大学" class="school-logo">
+            </div>
+            <div class="header-info">
+                <h1>徐海麟</h1>
+                <p class="job-intention">求职意向：中学数学教师</p>
+                <p class="profile">2027届 · 部属公费师范生 · 数学教育方向</p>
+            </div>
+        </header>
 
-    <!-- 证书内容区 -->
-    <div class="tab-content">
-        <!-- 01 技能证书 -->
-        <div class="tab-pane active" id="tab1">
-            <div class="cert-grid">
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="01技能证书/01数学奥林匹克二级教练员.jpg" alt="数学奥林匹克二级教练员">
-                    <div class="cert-title">数学奥林匹克二级教练员</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="01技能证书/02普通话证书.jpg" alt="普通话证书">
-                    <div class="cert-title">普通话水平等级证书</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="01技能证书/03英语四级证书.jpg" alt="英语四级证书">
-                    <div class="cert-title">大学英语四级证书</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="01技能证书/04英语六级证书.jpg" alt="英语六级证书">
-                    <div class="cert-title">大学英语六级证书</div>
-                </div>
+        <!-- 一级分类导航 -->
+        <div class="tabs-container">
+            <div class="tabs" id="mainTabs">
+                <!-- 使用 data-color 属性定义各模块的主题色 -->
+                <div class="tab-item active" data-tab="tab1" data-color="#1e3a5f" data-light="#3b82f6">技能证书</div>
+                <div class="tab-item" data-tab="tab2" data-color="#b45309" data-light="#f59e0b">个人荣誉</div>
+                <div class="tab-item" data-tab="tab3" data-color="#0f766e" data-light="#14b8a6">公派留学</div>
+                <div class="tab-item" data-tab="tab4" data-color="#6d28d9" data-light="#8b5cf6">在校经历</div>
+                <div class="tab-item" data-tab="tab5" data-color="#047857" data-light="#10b981">师范生技能</div>
+                <div class="tab-item" data-tab="tab6" data-color="#be123c" data-light="#f43f5e">其他奖项</div>
             </div>
         </div>
 
-        <!-- 02 个人荣誉 -->
-        <div class="tab-pane" id="tab2">
-            <div class="cert-grid">
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="02个人荣誉/01博雅丹桂奖学金.jpg" alt="博雅丹桂奖学金">
-                    <div class="cert-title">博雅丹桂奖学金</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="02个人荣誉/02树人单项奖学金.jpg" alt="树人单项奖学金">
-                    <div class="cert-title">树人单项奖学金</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="02个人荣誉/03先进个人.jpg" alt="先进个人">
-                    <div class="cert-title">先进个人</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="02个人荣誉/04 2023-2024三好学生.jpg" alt="2023-2024三好学生">
-                    <div class="cert-title">2023-2024 三好学生</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="02个人荣誉/05 2024-2025三好学生.jpg" alt="2024-2025三好学生">
-                    <div class="cert-title">2024-2025 三好学生</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="02个人荣誉/06优秀共青团员.jpg" alt="优秀共青团员">
-                    <div class="cert-title">优秀共青团员</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="02个人荣誉/07优秀志愿者.jpg" alt="优秀志愿者">
-                    <div class="cert-title">优秀志愿者</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="02个人荣誉/08志愿服务证明.jpg" alt="志愿服务证明">
-                    <div class="cert-title">志愿服务证明</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 03 公派留学 -->
-        <div class="tab-pane" id="tab3">
-            <div class="cert-grid">
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="03公派留学/01资格证书.jpg" alt="公派留学资格证书">
-                    <div class="cert-title">国家公派留学资格证书</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="03公派留学/02语言证明邀请函.jpg" alt="语言证明邀请函">
-                    <div class="cert-title">语言证明与邀请函</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="03公派留学/03成绩单.jpg" alt="留学成绩单">
-                    <div class="cert-title">境外学业成绩单</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 04 在校经历 -->
-        <div class="tab-pane" id="tab4">
-            <div class="sub-tabs" id="subTabs">
-                <div class="sub-tab-item active" data-sub="sub1">暑期支教</div>
-                <div class="sub-tab-item" data-sub="sub2">学生工作</div>
-            </div>
-
-            <!-- 子分类1：暑期支教 -->
-            <div class="sub-pane active" id="sub1">
+        <!-- 证书内容区 -->
+        <div class="tab-content">
+            <!-- 01 技能证书 -->
+            <div class="tab-pane active" id="tab1">
                 <div class="cert-grid">
                     <div class="cert-card" onclick="openLightbox(this)">
-                        <img src="04在校经历/01暑期支教/01湖北日报1.jpg" alt="湖北日报报道">
-                        <div class="cert-title">湖北日报报道（一）</div>
+                        <div class="img-wrap"><img src="01技能证书/01数学奥林匹克二级教练员.jpg" alt="数学奥林匹克二级教练员"></div>
+                        <div class="cert-title">数学奥林匹克二级教练员</div>
                     </div>
                     <div class="cert-card" onclick="openLightbox(this)">
-                        <img src="04在校经历/01暑期支教/02湖北日报2.jpg" alt="湖北日报报道">
-                        <div class="cert-title">湖北日报报道（二）</div>
+                        <div class="img-wrap"><img src="01技能证书/02普通话证书.jpg" alt="普通话证书"></div>
+                        <div class="cert-title">普通话水平等级证书</div>
                     </div>
                     <div class="cert-card" onclick="openLightbox(this)">
-                        <img src="04在校经历/01暑期支教/03青春远安.jpg" alt="青春远安报道">
-                        <div class="cert-title">青春远安报道</div>
+                        <div class="img-wrap"><img src="01技能证书/03英语四级证书.jpg" alt="英语四级证书"></div>
+                        <div class="cert-title">大学英语四级证书</div>
                     </div>
                     <div class="cert-card" onclick="openLightbox(this)">
-                        <img src="04在校经历/01暑期支教/04远安发布.jpg" alt="远安发布报道">
-                        <div class="cert-title">远安发布报道</div>
-                    </div>
-                    <div class="cert-card" onclick="openLightbox(this)">
-                        <img src="04在校经历/01暑期支教/05当代师范生杂志.jpg" alt="当代师范生杂志">
-                        <div class="cert-title">当代师范生杂志收录</div>
-                    </div>
-                    <div class="cert-card" onclick="openLightbox(this)">
-                        <img src="04在校经历/01暑期支教/06爱在华师公众号.jpg" alt="爱在华师公众号">
-                        <div class="cert-title">爱在华师公众号报道</div>
-                    </div>
-                    <div class="cert-card" onclick="openLightbox(this)">
-                        <img src="04在校经历/01暑期支教/07实践证明.jpg" alt="暑期实践证明">
-                        <div class="cert-title">暑期社会实践证明</div>
-                    </div>
-                    <div class="cert-card" onclick="openLightbox(this)">
-                        <img src="04在校经历/01暑期支教/08七彩假期项目公示.jpg" alt="七彩假期项目公示">
-                        <div class="cert-title">七彩假期项目公示</div>
+                        <div class="img-wrap"><img src="01技能证书/04英语六级证书.jpg" alt="英语六级证书"></div>
+                        <div class="cert-title">大学英语六级证书</div>
                     </div>
                 </div>
             </div>
 
-            <!-- 子分类2：学生工作 -->
-            <div class="sub-pane" id="sub2">
+            <!-- 02 个人荣誉 -->
+            <div class="tab-pane" id="tab2">
                 <div class="cert-grid">
                     <div class="cert-card" onclick="openLightbox(this)">
-                        <img src="04在校经历/02学生工作/01 2023-2024学生主席.jpg" alt="2023-2024学生会主席聘书">
-                        <div class="cert-title">2023-2024 学生会主席聘书</div>
+                        <div class="img-wrap"><img src="02个人荣誉/01博雅丹桂奖学金.jpg" alt="博雅丹桂奖学金"></div>
+                        <div class="cert-title">博雅丹桂奖学金</div>
                     </div>
                     <div class="cert-card" onclick="openLightbox(this)">
-                        <img src="04在校经历/02学生工作/02 2024-2025学生主席.jpg" alt="2024-2025学生会主席聘书">
-                        <div class="cert-title">2024-2025 学生会主席聘书</div>
+                        <div class="img-wrap"><img src="02个人荣誉/02树人单项奖学金.jpg" alt="树人单项奖学金"></div>
+                        <div class="cert-title">树人单项奖学金</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="02个人荣誉/03先进个人.jpg" alt="先进个人"></div>
+                        <div class="cert-title">先进个人</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="02个人荣誉/04 2023-2024三好学生.jpg" alt="2023-2024三好学生"></div>
+                        <div class="cert-title">2023-2024 三好学生</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="02个人荣誉/05 2024-2025三好学生.jpg" alt="2024-2025三好学生"></div>
+                        <div class="cert-title">2024-2025 三好学生</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="02个人荣誉/06优秀共青团员.jpg" alt="优秀共青团员"></div>
+                        <div class="cert-title">优秀共青团员</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="02个人荣誉/07优秀志愿者.jpg" alt="优秀志愿者"></div>
+                        <div class="cert-title">优秀志愿者</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="02个人荣誉/08志愿服务证明.jpg" alt="志愿服务证明"></div>
+                        <div class="cert-title">志愿服务证明</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 03 公派留学 -->
+            <div class="tab-pane" id="tab3">
+                <div class="cert-grid">
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="03公派留学/01资格证书.jpg" alt="公派留学资格证书"></div>
+                        <div class="cert-title">国家公派留学资格证书</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="03公派留学/02语言证明邀请函.jpg" alt="语言证明邀请函"></div>
+                        <div class="cert-title">语言证明与邀请函</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="03公派留学/03成绩单.jpg" alt="留学成绩单"></div>
+                        <div class="cert-title">境外学业成绩单</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 04 在校经历 -->
+            <div class="tab-pane" id="tab4">
+                <div class="sub-tabs" id="subTabs">
+                    <div class="sub-tab-item active" data-sub="sub1">暑期支教</div>
+                    <div class="sub-tab-item" data-sub="sub2">学生工作</div>
+                </div>
+
+                <!-- 子分类1：暑期支教 -->
+                <div class="sub-pane active" id="sub1">
+                    <div class="cert-grid">
+                        <div class="cert-card" onclick="openLightbox(this)">
+                            <div class="img-wrap"><img src="04在校经历/01暑期支教/01湖北日报1.jpg" alt="湖北日报报道"></div>
+                            <div class="cert-title">湖北日报报道（一）</div>
+                        </div>
+                        <div class="cert-card" onclick="openLightbox(this)">
+                            <div class="img-wrap"><img src="04在校经历/01暑期支教/02湖北日报2.jpg" alt="湖北日报报道"></div>
+                            <div class="cert-title">湖北日报报道（二）</div>
+                        </div>
+                        <div class="cert-card" onclick="openLightbox(this)">
+                            <div class="img-wrap"><img src="04在校经历/01暑期支教/03青春远安.jpg" alt="青春远安报道"></div>
+                            <div class="cert-title">青春远安报道</div>
+                        </div>
+                        <div class="cert-card" onclick="openLightbox(this)">
+                            <div class="img-wrap"><img src="04在校经历/01暑期支教/04远安发布.jpg" alt="远安发布报道"></div>
+                            <div class="cert-title">远安发布报道</div>
+                        </div>
+                        <div class="cert-card" onclick="openLightbox(this)">
+                            <div class="img-wrap"><img src="04在校经历/01暑期支教/05当代师范生杂志.jpg" alt="当代师范生杂志"></div>
+                            <div class="cert-title">当代师范生杂志收录</div>
+                        </div>
+                        <div class="cert-card" onclick="openLightbox(this)">
+                            <div class="img-wrap"><img src="04在校经历/01暑期支教/06爱在华师公众号.jpg" alt="爱在华师公众号"></div>
+                            <div class="cert-title">爱在华师公众号报道</div>
+                        </div>
+                        <div class="cert-card" onclick="openLightbox(this)">
+                            <div class="img-wrap"><img src="04在校经历/01暑期支教/07实践证明.jpg" alt="暑期实践证明"></div>
+                            <div class="cert-title">暑期社会实践证明</div>
+                        </div>
+                        <div class="cert-card" onclick="openLightbox(this)">
+                            <div class="img-wrap"><img src="04在校经历/01暑期支教/08七彩假期项目公示.jpg" alt="七彩假期项目公示"></div>
+                            <div class="cert-title">七彩假期项目公示</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 子分类2：学生工作 -->
+                <div class="sub-pane" id="sub2">
+                    <div class="cert-grid">
+                        <div class="cert-card" onclick="openLightbox(this)">
+                            <div class="img-wrap"><img src="04在校经历/02学生工作/01 2023-2024学生主席.jpg" alt="2023-2024学生会主席聘书"></div>
+                            <div class="cert-title">2023-2024 学生会主席聘书</div>
+                        </div>
+                        <div class="cert-card" onclick="openLightbox(this)">
+                            <div class="img-wrap"><img src="04在校经历/02学生工作/02 2024-2025学生主席.jpg" alt="2024-2025学生会主席聘书"></div>
+                            <div class="cert-title">2024-2025 学生会主席聘书</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 05 师范生技能 -->
+            <div class="tab-pane" id="tab5">
+                <div class="cert-grid">
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="05师范生技能/01优质课比赛一等奖.jpg" alt="优质课比赛一等奖"></div>
+                        <div class="cert-title">优质课比赛 一等奖</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="05师范生技能/02微课比赛二等奖.jpg" alt="微课比赛二等奖"></div>
+                        <div class="cert-title">微课比赛 二等奖</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="05师范生技能/03普通话朗诵比赛二等奖.jpg" alt="普通话朗诵比赛二等奖"></div>
+                        <div class="cert-title">普通话朗诵比赛 二等奖</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="05师范生技能/04班主任基本功比赛三等奖.jpg" alt="班主任基本功比赛三等奖"></div>
+                        <div class="cert-title">班主任基本功比赛 三等奖</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="05师范生技能/05试卷设计比赛三等奖.jpg" alt="试卷设计比赛三等奖"></div>
+                        <div class="cert-title">试卷设计比赛 三等奖</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 06 其他奖项 -->
+            <div class="tab-pane" id="tab6">
+                <div class="cert-grid">
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="06其他奖项/01简历比赛二等奖.jpg" alt="简历比赛二等奖"></div>
+                        <div class="cert-title">简历比赛 二等奖</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="06其他奖项/02职业规划大赛三等奖.jpg" alt="职业规划大赛三等奖"></div>
+                        <div class="cert-title">职业规划大赛 三等奖</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="06其他奖项/03挑战杯优秀奖.jpg" alt="挑战杯优秀奖"></div>
+                        <div class="cert-title">挑战杯 优秀奖</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="06其他奖项/04挑战杯三等奖.jpg" alt="挑战杯三等奖"></div>
+                        <div class="cert-title">挑战杯 三等奖</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="06其他奖项/05军训优秀学员.jpg" alt="军训优秀学员"></div>
+                        <div class="cert-title">军训优秀学员</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="06其他奖项/06军训之星风采奖.jpg" alt="军训之星风采奖"></div>
+                        <div class="cert-title">军训之星风采奖</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="06其他奖项/07第一届情景剧大赛三等奖.jpg" alt="第一届情景剧大赛三等奖"></div>
+                        <div class="cert-title">第一届情景剧大赛 三等奖</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="06其他奖项/08第二届情景剧大赛三等奖.jpg" alt="第二届情景剧大赛三等奖"></div>
+                        <div class="cert-title">第二届情景剧大赛 三等奖</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="06其他奖项/09体育活动积极分子.jpg" alt="体育活动积极分子"></div>
+                        <div class="cert-title">体育活动积极分子</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="06其他奖项/10CUUA华中预选赛最佳新人.jpg" alt="CUUA华中预选赛最佳新人"></div>
+                        <div class="cert-title">CUUA华中预选赛 最佳新人</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="06其他奖项/11运动会男子400m第二名.jpg" alt="运动会男子400m第二名"></div>
+                        <div class="cert-title">运动会男子400米 第二名</div>
+                    </div>
+                    <div class="cert-card" onclick="openLightbox(this)">
+                        <div class="img-wrap"><img src="06其他奖项/12运动会男子跳远第六名.jpg" alt="运动会男子跳远第六名"></div>
+                        <div class="cert-title">运动会男子跳远 第六名</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 05 师范生技能 -->
-        <div class="tab-pane" id="tab5">
-            <div class="cert-grid">
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="05师范生技能/01优质课比赛一等奖.jpg" alt="优质课比赛一等奖">
-                    <div class="cert-title">优质课比赛 一等奖</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="05师范生技能/02微课比赛二等奖.jpg" alt="微课比赛二等奖">
-                    <div class="cert-title">微课比赛 二等奖</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="05师范生技能/03普通话朗诵比赛二等奖.jpg" alt="普通话朗诵比赛二等奖">
-                    <div class="cert-title">普通话朗诵比赛 二等奖</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="05师范生技能/04班主任基本功比赛三等奖.jpg" alt="班主任基本功比赛三等奖">
-                    <div class="cert-title">班主任基本功比赛 三等奖</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="05师范生技能/05试卷设计比赛三等奖.jpg" alt="试卷设计比赛三等奖">
-                    <div class="cert-title">试卷设计比赛 三等奖</div>
-                </div>
-            </div>
+        <!-- 页脚 -->
+        <div class="footer">
+            徐海麟 · 个人荣誉资质展示
         </div>
-
-        <!-- 06 其他奖项 -->
-        <div class="tab-pane" id="tab6">
-            <div class="cert-grid">
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="06其他奖项/01简历比赛二等奖.jpg" alt="简历比赛二等奖">
-                    <div class="cert-title">简历比赛 二等奖</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="06其他奖项/02职业规划大赛三等奖.jpg" alt="职业规划大赛三等奖">
-                    <div class="cert-title">职业规划大赛 三等奖</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="06其他奖项/03挑战杯优秀奖.jpg" alt="挑战杯优秀奖">
-                    <div class="cert-title">挑战杯 优秀奖</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="06其他奖项/04挑战杯三等奖.jpg" alt="挑战杯三等奖">
-                    <div class="cert-title">挑战杯 三等奖</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="06其他奖项/05军训优秀学员.jpg" alt="军训优秀学员">
-                    <div class="cert-title">军训优秀学员</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="06其他奖项/06军训之星风采奖.jpg" alt="军训之星风采奖">
-                    <div class="cert-title">军训之星风采奖</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="06其他奖项/07第一届情景剧大赛三等奖.jpg" alt="第一届情景剧大赛三等奖">
-                    <div class="cert-title">第一届情景剧大赛 三等奖</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="06其他奖项/08第二届情景剧大赛三等奖.jpg" alt="第二届情景剧大赛三等奖">
-                    <div class="cert-title">第二届情景剧大赛 三等奖</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="06其他奖项/09体育活动积极分子.jpg" alt="体育活动积极分子">
-                    <div class="cert-title">体育活动积极分子</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="06其他奖项/10CUUA华中预选赛最佳新人.jpg" alt="CUUA华中预选赛最佳新人">
-                    <div class="cert-title">CUUA华中预选赛 最佳新人</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="06其他奖项/11运动会男子400m第二名.jpg" alt="运动会男子400m第二名">
-                    <div class="cert-title">运动会男子400米 第二名</div>
-                </div>
-                <div class="cert-card" onclick="openLightbox(this)">
-                    <img src="06其他奖项/12运动会男子跳远第六名.jpg" alt="运动会男子跳远第六名">
-                    <div class="cert-title">运动会男子跳远 第六名</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 页脚 -->
-    <div class="footer">
-        徐海麟 · 个人荣誉资质展示
     </div>
 
     <!-- 灯箱放大组件 -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-        <span class="lightbox-close">&times;</span>
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
         <span class="lightbox-prev" onclick="event.stopPropagation(); prevImage()">&#10094;</span>
         <span class="lightbox-next" onclick="event.stopPropagation(); nextImage()">&#10095;</span>
         <img id="lightboxImg" src="" alt="证书放大查看">
@@ -562,24 +705,34 @@
     </div>
 
     <script>
-        // 全局变量：当前图片列表与索引
+        // ===== 全局变量：当前图片列表与索引 =====
         let currentImageList = [];
         let currentImageIndex = 0;
 
-        // 一级标签切换
+        // ===== 一级标签切换与主题色联动 =====
         const mainTabs = document.querySelectorAll('#mainTabs .tab-item');
         const tabPanes = document.querySelectorAll('.tab-pane');
+        
         mainTabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 const target = tab.getAttribute('data-tab');
+                // 获取点击的Tab上定义的专属颜色
+                const themeColor = tab.getAttribute('data-color');
+                const themeLight = tab.getAttribute('data-light');
+
+                // 1. 切换标签和面板的 active 状态
                 mainTabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
                 tabPanes.forEach(pane => pane.classList.remove('active'));
                 document.getElementById(target).classList.add('active');
+
+                // 2. 动态修改全局 CSS 变量（实现整页颜色平滑过渡）
+                document.documentElement.style.setProperty('--primary', themeColor);
+                document.documentElement.style.setProperty('--primary-light', themeLight);
             });
         });
 
-        // 二级子标签切换
+        // ===== 二级子标签切换 =====
         const subTabs = document.querySelectorAll('#subTabs .sub-tab-item');
         const subPanes = document.querySelectorAll('.sub-pane');
         subTabs.forEach(tab => {
@@ -592,52 +745,48 @@
             });
         });
 
-        // 打开灯箱
+        // ===== 打开灯箱 =====
         function openLightbox(card) {
-            // 获取当前激活的面板（优先子面板）
             const activeTab = document.querySelector('.tab-pane.active');
             const activeSubPane = activeTab.querySelector('.sub-pane.active');
             const container = activeSubPane || activeTab;
             
-            // 收集当前分类下所有图片
             const cards = container.querySelectorAll('.cert-card');
             currentImageList = Array.from(cards).map(c => c.querySelector('img').src);
             currentImageIndex = Array.from(cards).indexOf(card);
 
-            // 更新图片与计数
             updateLightboxImage();
             
-            // 显示灯箱
             document.getElementById('lightbox').classList.add('show');
             document.body.style.overflow = 'hidden';
         }
 
-        // 更新灯箱图片与计数
+        // ===== 更新灯箱图片与计数 =====
         function updateLightboxImage() {
             document.getElementById('lightboxImg').src = currentImageList[currentImageIndex];
             document.getElementById('lightboxCounter').textContent = 
                 `${currentImageIndex + 1} / ${currentImageList.length}`;
         }
 
-        // 上一张
+        // ===== 上一张 =====
         function prevImage() {
             currentImageIndex = (currentImageIndex - 1 + currentImageList.length) % currentImageList.length;
             updateLightboxImage();
         }
 
-        // 下一张
+        // ===== 下一张 =====
         function nextImage() {
             currentImageIndex = (currentImageIndex + 1) % currentImageList.length;
             updateLightboxImage();
         }
 
-        // 关闭灯箱
+        // ===== 关闭灯箱 =====
         function closeLightbox() {
             document.getElementById('lightbox').classList.remove('show');
             document.body.style.overflow = '';
         }
 
-        // 键盘快捷键
+        // ===== 键盘快捷键 =====
         document.addEventListener('keydown', (e) => {
             if (!document.getElementById('lightbox').classList.contains('show')) return;
             if (e.key === 'Escape') closeLightbox();
